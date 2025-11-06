@@ -2,6 +2,7 @@ import csv, os
 
 __location__ = os.path.realpath(
     os.path.join(os.getcwd(), os.path.dirname(__file__)))
+
 cities = []
 with open(os.path.join(__location__, 'Cities.csv')) as f:
     rows = csv.DictReader(f)
@@ -12,92 +13,58 @@ with open(os.path.join(__location__, 'Cities.csv')) as f:
 for city in cities[:5]:
     print(city)
 
-# Print the average temperature of all the cities
-print("The average temperature of all the cities:")
-temps = []
-for city in cities:
-    temps.append(float(city['temperature']))
-print(sum(temps)/len(temps))
-print()
-
-# Print all cities in Germany
-
-
-'''
-Your code here
-
-'''
-# German_city = []c
-# print("All city in Germany")
-# for dict in cities:
-#     if dict['country'] == 'Germany':
-#         German_city.append(dict)
-# print(German_city)
-# print()
-def fliter(condition, dict_list):
+def filter(condition, dict_list):
     temps = []
     for item in dict_list:
         if condition(item):
             temps.append(item)
     return temps
 
-    
-fliterd_list = fliter(lambda x: x['country'] == 'Germany', cities)
-print(fliterd_list)
+
+def aggregate(aggregation_key, aggregation_function, dict_list):
+    temps = []
+    for item in dict_list:
+        try:
+            temps.append(float(item[aggregation_key]))
+        except ValueError:
+            temps.append(item[aggregation_key])
+    return aggregation_function(temps)
+
+
+# Print the average temperature of all the cities
+print("The average temperature of all the cities:")
+Value = aggregate("temperature", lambda x: sum(x) / len(x), cities)
+print(Value)
+print()
+
+# Print all cities in Germany
+print("All cities in Germany:")
+filter_lists = filter(lambda x : x["country"] == "Germany", cities)
+for city in filter_lists:
+    print(city["city"], end = " ")
 print()
 
 # Print all cities in Spain with a temperature above 12°C
-
-'''
-Your code here
-
-'''
-Spain = []
-for dict in cities:
-    if dict['country'] == 'Spain':
-        if float(dict['temperature']) > 12:
-            Spain.append(dict)
-print(Spain)
+print("All cities in Spain with a temperature above 12°C:")
+my_cities = filter(lambda x: x["country"] == "Spain" and float(x["temperature"]) > 12.0, cities)
+cities_list = [[city["city"], city ["country"], city["temperature"]] for city in my_cities]
+for city in cities_list:
+    print(city)
+print()
 
 # Count the number of unique countries
-
-'''
-Your code here
-
-'''
 print("The number of unique countries:")
-city_lists = []
-for city in cities:
-    if city['country'] not in city_lists:
-        city_lists.append(city['country'])
-print(len(city_lists))
+Value = aggregate("country", lambda x: len(set(x)), cities)
+print(Value)
 print()
 
 # Print the average temperature for all the cities in Germany
-
-'''
-
-Your code here
-
-'''
 print("The average temperature for all the cities in Germany:")
-city_lists = []
-for city in cities:
-    if city['country'] == 'Germany':
-        city_lists.append(float(city['temperature']))
-print(sum(city_lists)/len(city_lists))
+Value = aggregate("temperature", lambda x: sum(x) / len(x), filter(lambda x: x["country"] == "Germany", cities))
+print(Value)
 print()
 
 # Print the max temperature for all the cities in Italy
-
-'''
-Your code here
-
-'''
 print("The max temperature for all the cities in Italy:")
-city_lists = []
-for city in cities:
-    if city['country'] == 'Italy':
-        city_lists.append(float(city['temperature']))
-print(max(city_lists))
-print()
+Value = aggregate("temperature", lambda x: max(x), filter(lambda x: x["country"] == "Italy", cities))
+print(Value)
