@@ -112,8 +112,8 @@ class Library:
 
         if member.return_book(book):
             self.borrowed_books = [
-                t for t in self.borrowed_books
-                if not (t["member_id"] == member.id and t["book_id"] == book.id)
+                b for b in self.borrowed_books
+                if not (b["member_id"] == member.id and b["book_id"] == book.id)
             ]
             return True
         return False

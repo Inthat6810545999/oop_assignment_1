@@ -1,12 +1,12 @@
-#Inthat Niramarn 6810545999
-# 📚 Library Management System (Procedural Python)
+# Inthat Niramarn 6810545999  
+# Library Management System (Object-Oriented Python)
 
-A simple **Library Management System** implemented using **procedural programming** in Python.  
-This project demonstrates how a library can manage books, members, and borrowing/returning transactions using functions and in-memory data structures.
+A simple **Library Management System** implemented using **Object-Oriented Programming (OOP)** in Python.  
+This project refactors the original procedural version into an OOP design to demonstrate the use of **classes, objects, encapsulation, and modular structure**.
 
 ---
 
-## 🧠 Overview
+##  Overview
 
 This system allows a user to:
 - Register new books and library members  
@@ -14,45 +14,53 @@ This system allows a user to:
 - View available books  
 - View books borrowed by a specific member  
 
-It uses **lists** and **dictionaries** to manage data instead of classes or databases.
+The system is designed using **three main classes**: `Book`, `Member`, and `Library`.
 
 ---
 
-## ⚙️ Features
+##  Features
 
-### 📘 Book Management
-- Add new books to the library  
+###  Book Management (`Book` Class)
+- Create book objects with unique IDs, titles, authors, and copy counts  
 - Track total and available copies  
-- Display currently available books  
+- Borrow and return books through class methods  
 
-### 👤 Member Management
-- Register new members  
+###  Member Management (`Member` Class)
+- Create and manage member profiles  
 - Track each member’s borrowed books  
-- Enforce a borrowing limit (max 3 books per member)  
+- Limit borrowing to **3 books per member**  
+- Allow returning of borrowed books  
 
-### 🔁 Borrowing & Returning
-- Borrow books if available  
-- Return books and update stock  
-- Prevent invalid operations (e.g., returning a book not borrowed)
+###  Library Operations (`Library` Class)
+- Manage all books and members in collections  
+- Add new books and members  
+- Handle borrowing and returning transactions  
+- Display available books and borrowed books per member  
 
 ---
 
-## 🧩 Data Structures
+##  Class Design
 
-| Variable | Type | Purpose |
-|-----------|------|----------|
-| `library_books` | `list` of `dict` | Stores all book details |
-| `registered_members` | `list` of `dict` | Stores member profiles |
-| `loan_records` | `list` of `dict` | Tracks borrowing transactions |
+| Class | Attributes | Key Methods |
+|--------|-------------|-------------|
+| **Book** | `id`, `title`, `author`, `total_copies`, `available_copies` | `borrow()`, `return_book()`, `is_available()` |
+| **Member** | `id`, `name`, `email`, `borrowed_books` | `borrow_book()`, `return_book()`, `can_borrow()` |
+| **Library** | `books`, `members` | `add_book()`, `add_member()`, `borrow_book()`, `return_book()`, `display_available_books()`, `display_member_books()` |
 
-Each **book** and **member** is stored as a dictionary for easy access and update.
+---
 
-Example:
-```python
-book = {
-    'id': 1,
-    'title': 'Clean Code',
-    'author': 'Robert C. Martin',
-    'available_copies': 2,
-    'total_copies': 2
-}
+##  Testing
+
+The `test_oop.py` file provides a comprehensive test of all library functions, covering both **normal operations** and **edge cases**.
+
+###  Basic Tests
+- Add books and members  
+- Borrow and return books  
+- Display available and borrowed books  
+
+###  Edge Case Tests
+- Borrowing unavailable books  
+- Borrowing more than 3 books  
+- Returning books not borrowed  
+- Handling non-existent members or books  
+
