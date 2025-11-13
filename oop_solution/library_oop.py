@@ -1,3 +1,4 @@
+#Inthat 6810545999
 class Book:
     def __init__(self, id, title, author, total_copies):
         self.id = id
@@ -5,6 +6,7 @@ class Book:
         self.author = author
         self.total_copies = total_copies
         self.available_copies = total_copies
+
 
     def borrow_copy(self):
         if self.available_copies > 0:
