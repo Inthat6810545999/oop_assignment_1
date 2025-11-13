@@ -104,6 +104,7 @@ def run_library_demo():
             for book_id in member['borrowed_books']:
                 book = find_book(book_id)
                 print(f"  - {book['title']}")
+                
         else:
             print("  (No books borrowed)")
     
